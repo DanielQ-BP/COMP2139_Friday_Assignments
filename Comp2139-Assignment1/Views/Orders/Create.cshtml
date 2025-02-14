@@ -1,0 +1,35 @@
+﻿@model Comp2139_Assignment1.Models.Order
+
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="CustomerName">Customer Name</label>
+        <input type="text" class="form-control" id="CustomerName" name="CustomerName" required />
+    </div>
+    <div class="form-group">
+        <label for="ShippingAddress">Shipping Address</label>
+        <input type="text" class="form-control" id="ShippingAddress" name="ShippingAddress" required />
+    </div>
+    
+    <h3>Order Items</h3>
+    <div id="orderItems">
+        <div class="form-group">
+            <label for="ProductId">Product</label>
+            <select class="form-control" name="productIds" id="ProductId">
+                @foreach (var product in ViewData["Products"] as IEnumerable<Comp2139_Assignment1.Models.Product>)
+                {
+                    <option value="@product.Id">@product.Name</option>
+                }
+            </select>
+            <label for="Quantity">Quantity</label>
+            <input type="number" class="form-control" name="quantities" required />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Order</button>
+</form>

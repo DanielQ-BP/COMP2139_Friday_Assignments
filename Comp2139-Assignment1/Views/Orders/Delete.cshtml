@@ -1,0 +1,21 @@
+﻿@model Comp2139_Assignment1.Models.Order
+
+@{
+    ViewData["Title"] = "Delete Order";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Are you sure you want to delete this order?</p>
+
+<ul>
+    <li>Order ID: @Model.Id</li>
+    <li>Customer: @Model.CustomerName</li>
+    <li>Shipping Address: @Model.ShippingAddress</li>
+    <li>Order Date: @Model.OrderDate</li>
+</ul>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="@Url.Action("Index", "Orders")" class="btn btn-secondary">Cancel</a>
+</form>
