@@ -4,7 +4,7 @@ using Comp2139_Assignment1.Models;
 
 namespace Comp2139_Assignment1.Models
 {
-    public class Order
+    public class Orders
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.Now;
@@ -20,6 +20,6 @@ namespace Comp2139_Assignment1.Models
         public int ProductId { get; set; }
         public Product Product { get; set; } // Link to Product
         public int OrderId { get; set; }
-        public Order Order { get; set; } // Link to Order
+        public Orders Orders { get; set; } // Link to Order
     }
 }

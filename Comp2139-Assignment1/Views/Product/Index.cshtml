@@ -1,8 +1,43 @@
-﻿@model TModel
+﻿@model IEnumerable<Comp2139_Assignment1.Models.Product>
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewData["Title"] = "Product List";
 }
 
-<h2>title</h2>
+<h1>@ViewData["Title"]</h1>
+
+<form method="get" class="mb-3">
+    <input type="text" name="searchQuery" placeholder="Search products..." class="form-control" />
+    <button type="submit" class="btn btn-primary mt-2">Search</button>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Name</td>
+            <td>@product.Description</td>
+            <td>@product.Category.Name</td>
+            <td>@product.Quantity</td>
+            <td>@product.Price</td>
+            <td>
+                <a href="@Url.Action("Edit", "Inventory", new { id = product.Id })" class="btn btn-warning">Edit</a>
+                <a href="@Url.Action("Delete", "Inventory", new { id = product.Id })" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Inventory")" class="btn btn-success">Add New Product</a>

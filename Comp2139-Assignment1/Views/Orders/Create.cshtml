@@ -1,4 +1,4 @@
-﻿@model Comp2139_Assignment1.Models.Order
+﻿@model Comp2139_Assignment1.Models.Orders
 
 @{
     ViewData["Title"] = "Create Order";
@@ -15,15 +15,42 @@
         <label for="ShippingAddress">Shipping Address</label>
         <input type="text" class="form-control" id="ShippingAddress" name="ShippingAddress" required />
     </div>
-    
+
+    <!-- Category Dropdown -->
+    <div class="form-group">
+        <label for="CategoryId">Category</label>
+        <select class="form-control" id="CategoryId" name="CategoryId" onchange="filterProducts()">
+            <option value="">Select Category</option>
+            @if (ViewData["Categories"] != null)
+            {
+                @foreach (var category in ViewData["Categories"] as IEnumerable<Comp2139_Assignment1.Models.Category>)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            }
+            else
+            {
+                <option disabled>No categories available</option>
+            }
+        </select>
+    </div>
+
+    <!-- Product Selection -->
     <h3>Order Items</h3>
     <div id="orderItems">
         <div class="form-group">
             <label for="ProductId">Product</label>
             <select class="form-control" name="productIds" id="ProductId">
-                @foreach (var product in ViewData["Products"] as IEnumerable<Comp2139_Assignment1.Models.Product>)
+                @if (ViewData["Products"] != null)
                 {
-                    <option value="@product.Id">@product.Name</option>
+                    @foreach (var product in ViewData["Products"] as IEnumerable<Comp2139_Assignment1.Models.Product>)
+                    {
+                        <option value="@product.Id" data-category="@product.CategoryId">@product.Name</option>
+                    }
+                }
+                else
+                {
+                    <option disabled>No products available</option>
                 }
             </select>
             <label for="Quantity">Quantity</label>
@@ -33,3 +60,26 @@
 
     <button type="submit" class="btn btn-primary">Create Order</button>
 </form>
+
+<!-- JavaScript to Filter Products Based on Category Selection -->
+<script>
+    function filterProducts() {
+        var selectedCategory = document.getElementById("CategoryId").value;
+        var productDropdown = document.getElementById("ProductId");
+
+        // Show all products if no category is selected
+        for (var i = 0; i < productDropdown.options.length; i++) {
+            var productOption = productDropdown.options[i];
+            var productCategory = productOption.getAttribute("data-category");
+
+            if (!selectedCategory || productCategory === selectedCategory) {
+                productOption.style.display = "block";
+            } else {
+                productOption.style.display = "none";
+            }
+        }
+
+        // Reset selection
+        productDropdown.value = "";
+    }
+</script>

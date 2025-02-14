@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Comp2139_Assignment1.Controllers
 {
-    public class OrderController : Controller
+    public class OrdersController : Controller
     {
         private readonly InventoryDBContext _context;
 
-        public OrderController(InventoryDBContext context)
+        public OrdersController(InventoryDBContext context)
         {
             _context = context;
         }
@@ -23,11 +23,26 @@ namespace Comp2139_Assignment1.Controllers
         }
 
         // Create: Show form to create a new order
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["Products"] = new SelectList(_context.Products, "Id", "Name");
-            return View();
+            var categories = await _context.Categories.ToListAsync(); // Fetch categories
+            var products = await _context.Products.ToListAsync(); // Fetch products
+
+            if (!categories.Any())
+            {
+                ModelState.AddModelError("", "No categories available.");
+                ViewData["Categories"] = new List<Category>();
+                ViewData["Products"] = new List<Product>();
+                return View(new Orders());
+            }
+
+            ViewData["Categories"] = new SelectList(categories, "Id", "Name");
+            ViewData["Products"] = new SelectList(products, "Id", "Name");
+
+            return View(new Orders());
         }
+
+    
 
         // Create: Process the form submission to create an order
         [HttpPost]
