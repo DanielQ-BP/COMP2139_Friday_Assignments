@@ -32,12 +32,12 @@
             <td>@product.Quantity</td>
             <td>@product.Price</td>
             <td>
-                <a href="@Url.Action("Edit", "Inventory", new { id = product.Id })" class="btn btn-warning">Edit</a>
-                <a href="@Url.Action("Delete", "Inventory", new { id = product.Id })" class="btn btn-danger">Delete</a>
+                <a href="@Url.Action("Edit", "Product", new { id = product.Id })" class="btn btn-warning">Edit</a>
+                <a href="@Url.Action("Delete", "Product", new { id = product.Id })" class="btn btn-danger">Delete</a>
             </td>
         </tr>
     }
     </tbody>
 </table>
 
-<a href="@Url.Action("Create", "Inventory")" class="btn btn-success">Add New Product</a>
+<a href="@Url.Action("Create", "Product")" class="btn btn-success">Add New Product</a>
