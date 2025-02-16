@@ -11,6 +11,19 @@ namespace Comp2139_Assignment1.Data
         public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Orders>()
+                .Property(o => o.OrderDate)
+                .HasConversion(
+                    v => v.ToUniversalTime(), 
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
+        }
+
        
     }
+    
+    
 }

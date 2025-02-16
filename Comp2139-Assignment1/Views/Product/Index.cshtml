@@ -6,11 +6,75 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<!-- Search and Filters Form -->
 <form method="get" class="mb-3">
-    <input type="text" name="searchQuery" placeholder="Search products..." class="form-control" />
-    <button type="submit" class="btn btn-primary mt-2">Search</button>
+    <div class="form-row">
+        <!-- Search by Name -->
+        <div class="form-group col-md-4">
+            <label for="searchQuery">Search by Name</label>
+            <input type="text" name="searchQuery" class="form-control" placeholder="Enter product name..." value="@Context.Request.Query["searchQuery"]" />
+        </div>
+
+        <!-- Filter by Category -->
+        <div class="form-group col-md-3">
+            <label for="categoryId">Category</label>
+            <select name="categoryId">
+                <option value="">All Categories</option>
+                @if (ViewData["Categories"] != null && ViewData["Categories"] is IEnumerable<Comp2139_Assignment1.Models.Category> categoriesList)
+                {
+                    @foreach (var category in categoriesList)
+                    {
+                        <option value="@category.Id" selected="@(Context.Request.Query["categoryId"] == category.Id.ToString() ? "selected" : null)">
+                            @category.Name
+                        </option>
+                    }
+                }
+                else
+                {
+                    <option disabled>No categories available</option>
+                }
+            </select>
+
+        </div>
+
+        <!-- Filter by Price Range -->
+        <div class="form-group col-md-2">
+            <label for="minPrice">Min Price</label>
+            <input type="number" step="0.01" name="minPrice" class="form-control" placeholder="Min" value="@Context.Request.Query["minPrice"]" />
+        </div>
+        <div class="form-group col-md-2">
+            <label for="maxPrice">Max Price</label>
+            <input type="number" step="0.01" name="maxPrice" class="form-control" placeholder="Max" value="@Context.Request.Query["maxPrice"]" />
+        </div>
+
+        <!-- Filter by Low Stock -->
+        <div class="form-group col-md-2">
+            <label for="lowStock">Low Stock Only</label>
+            <input type="checkbox" name="lowStock" value="true" @(Context.Request.Query["lowStock"] == "true" ? "checked" : "") />
+        </div>
+    </div>
+
+    <!-- Sorting Options -->
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="sortBy">Sort By</label>
+            <select name="sortBy" class="form-control">
+                <option value="">Default</option>
+                <option value="price_asc" selected="@(Context.Request.Query["sortBy"] == "price_asc" ? "selected" : null)">Price (Low to High)</option>
+                <option value="price_desc" selected="@(Context.Request.Query["sortBy"] == "price_desc" ? "selected" : null)">Price (High to Low)</option>
+                <option value="quantity_asc" selected="@(Context.Request.Query["sortBy"] == "quantity_asc" ? "selected" : null)">Quantity (Low to High)</option>
+                <option value="quantity_desc" selected="@(Context.Request.Query["sortBy"] == "quantity_desc" ? "selected" : null)">Quantity (High to Low)</option>
+                <option value="name_asc" selected="@(Context.Request.Query["sortBy"] == "name_asc" ? "selected" : null)">Name (A to Z)</option>
+                <option value="name_desc" selected="@(Context.Request.Query["sortBy"] == "name_desc" ? "selected" : null)">Name (Z to A)</option>
+            </select>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Apply Filters</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Reset</a>
 </form>
 
+<!-- Product List Table -->
 <table class="table">
     <thead>
     <tr>
@@ -30,7 +94,7 @@
             <td>@product.Description</td>
             <td>@product.Category.Name</td>
             <td>@product.Quantity</td>
-            <td>@product.Price</td>
+            <td>@product.Price.ToString("C")</td>
             <td>
                 <a href="@Url.Action("Edit", "Product", new { id = product.Id })" class="btn btn-warning">Edit</a>
                 <a href="@Url.Action("Delete", "Product", new { id = product.Id })" class="btn btn-danger">Delete</a>

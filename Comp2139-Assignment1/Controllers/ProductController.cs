@@ -15,17 +15,105 @@ public class ProductController : Controller
         _context = context;
     }
 
-    public async Task<IActionResult> Index(string searchQuery)
+    public async Task<IActionResult> Index(string searchQuery, int? categoryId, decimal? minPrice, decimal? maxPrice, bool? lowStock, string sortBy)
+{
+    var categories = await _context.Categories.ToListAsync();
+    ViewData["Categories"] = categories; // Prevents null reference
+    
+    if (!categories.Any())
     {
-        var products = await _context.Products.Include(p => p.Category).ToListAsync();
-        return View(products);
+        ViewData["Categories"] = new List<Category>(); // Prevents null reference
+    }
+    else
+    {
+        ViewData["Categories"] = new SelectList(categories, "Id", "Name");
     }
 
-    public IActionResult Create()
+    
+    // Start with all products
+    var productsQuery = _context.Products.Include(p => p.Category).AsQueryable();
+
+    // Apply search filter
+    if (!string.IsNullOrEmpty(searchQuery))
     {
-        ViewData["Category"] = new SelectList(_context.Categories, "Id", "Name");
+        productsQuery = productsQuery.Where(p => p.Name.Contains(searchQuery));
+    }
+
+    // Apply category filter
+    if (categoryId.HasValue)
+    {
+        productsQuery = productsQuery.Where(p => p.CategoryId == categoryId);
+    }
+
+    // Apply price range filter
+    if (minPrice.HasValue)
+    {
+        productsQuery = productsQuery.Where(p => p.Price >= minPrice);
+    }
+    if (maxPrice.HasValue)
+    {
+        productsQuery = productsQuery.Where(p => p.Price <= maxPrice);
+    }
+
+    // Apply low-stock filter
+    if (lowStock.HasValue && lowStock.Value)
+    {
+        productsQuery = productsQuery.Where(p => p.Quantity < p.Lowthreshhold);
+    }
+
+    // Apply sorting
+    switch (sortBy)
+    {
+        case "price_asc":
+            productsQuery = productsQuery.OrderBy(p => p.Price);
+            break;
+        case "price_desc":
+            productsQuery = productsQuery.OrderByDescending(p => p.Price);
+            break;
+        case "quantity_asc":
+            productsQuery = productsQuery.OrderBy(p => p.Quantity);
+            break;
+        case "quantity_desc":
+            productsQuery = productsQuery.OrderByDescending(p => p.Quantity);
+            break;
+        case "name_asc":
+            productsQuery = productsQuery.OrderBy(p => p.Name);
+            break;
+        case "name_desc":
+            productsQuery = productsQuery.OrderByDescending(p => p.Name);
+            break;
+        default:
+            productsQuery = productsQuery.OrderBy(p => p.Name); // Default sorting by name
+            break;
+    }
+
+    // Execute the query and pass the results to the view
+    var products = await productsQuery.ToListAsync();
+
+    // Pass categories to the view for the category filter dropdown
+    ViewData["Categories"] = new SelectList(_context.Categories, "Id", "Name");
+
+    return View(products);
+}
+
+    public async Task<IActionResult> Create()
+    {
+        var categories = await _context.Categories.ToListAsync();
+
+        if (!categories.Any())
+        {
+            TempData["ErrorMessage"] = "No categories available.";
+            ViewData["Categories"] = new SelectList(new List<Category>(), "Id", "Name");
+        }
+        else
+        {
+            ViewData["Categories"] = new SelectList(categories, "Id", "Name");
+        }
+
         return View();
     }
+
+    
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -38,8 +126,7 @@ public class ProductController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewData["CategoryId"] = new SelectList(_context.Categories, "id", "Name", product.CategoryId);
-
+        ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
         return View(product);
     }
 
@@ -111,4 +198,24 @@ public class ProductController : Controller
         }
         return RedirectToAction(nameof(Index));
     }
+    
+    public async Task<IActionResult> InventoryOverview()
+    {
+        var totalProducts = await _context.Products.CountAsync();
+        var totalCategories = await _context.Categories.CountAsync();
+        var lowStockProducts = await _context.Products
+            .Where(p => p.Quantity < p.Lowthreshhold)
+            .Include(p => p.Category)
+            .ToListAsync();
+
+        var model = new InventoryOverviewViewModel
+        {
+            TotalProducts = totalProducts,
+            TotalCategories = totalCategories,
+            LowStockProducts = lowStockProducts
+        };
+
+        return View(model);
+    }
+
 }

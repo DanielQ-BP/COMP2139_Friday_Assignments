@@ -7,11 +7,23 @@ namespace Comp2139_Assignment1.Models
     public class Orders
     {
         public int Id { get; set; }
-        public DateTime OrderDate { get; set; } = DateTime.Now;
+    
+        private DateTime _orderDate;
+    
+        public DateTime OrderDate
+        {
+            get => _orderDate;
+            set => _orderDate = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+        }
+
         public string CustomerName { get; set; }
         public string ShippingAddress { get; set; }
-        public ICollection<OrderItem> OrderItems { get; set; } // Relation to OrderItems
+    
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
+
+
+
 
     public class OrderItem
     {

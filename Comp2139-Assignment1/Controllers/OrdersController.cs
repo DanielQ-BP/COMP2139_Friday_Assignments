@@ -25,24 +25,25 @@ namespace Comp2139_Assignment1.Controllers
         // Create: Show form to create a new order
         public async Task<IActionResult> Create()
         {
-            var categories = await _context.Categories.ToListAsync(); // Fetch categories
-            var products = await _context.Products.ToListAsync(); // Fetch products
+            // Fetch categories and products for dropdowns
+            var categories = await _context.Categories.ToListAsync();
+            var products = await _context.Products.ToListAsync();
 
-            if (!categories.Any())
+            if (!categories.Any() || !products.Any())  // Ensure both lists have data
             {
-                ModelState.AddModelError("", "No categories available.");
-                ViewData["Categories"] = new List<Category>();
-                ViewData["Products"] = new List<Product>();
+                ModelState.AddModelError("", "No categories or products available.");
+                ViewData["Categories"] = new List<SelectListItem>();
+                ViewData["Products"] = new List<SelectListItem>();
                 return View(new Orders());
             }
 
+            // Convert to SelectList for dropdowns
             ViewData["Categories"] = new SelectList(categories, "Id", "Name");
             ViewData["Products"] = new SelectList(products, "Id", "Name");
 
             return View(new Orders());
         }
-
-    
+        
 
         // Create: Process the form submission to create an order
         [HttpPost]
@@ -57,9 +58,14 @@ namespace Comp2139_Assignment1.Controllers
 
             if (ModelState.IsValid)
             {
+                // Convert OrderDate to UTC before saving
+                orders.OrderDate = DateTime.UtcNow;
+
+                // Save the order
                 _context.Orders.Add(orders);
                 await _context.SaveChangesAsync();
 
+                // Add order items
                 for (int i = 0; i < productIds.Count; i++)
                 {
                     var orderItem = new OrderItem
@@ -72,11 +78,33 @@ namespace Comp2139_Assignment1.Controllers
                 }
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                // Redirect to the order confirmation page
+                return RedirectToAction("OrderConfirmation", new { id = orders.Id });
             }
 
+            // If the model state is invalid, reload the form with existing data
             ViewData["Products"] = new SelectList(_context.Products, "Id", "Name");
             return View(orders);
+        }
+        
+        public async Task<IActionResult> OrderConfirmation(int id)
+        {
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            // Calculate the total price
+            decimal totalPrice = order.OrderItems.Sum(oi => oi.Product.Price * oi.Quantity);
+            ViewData["TotalPrice"] = totalPrice;
+
+            return View(order);
         }
 
         // Edit: Show form to edit an existing order
@@ -115,6 +143,9 @@ namespace Comp2139_Assignment1.Controllers
             {
                 try
                 {
+                    // Ensure OrderDate is stored as UTC
+                    orders.OrderDate = orders.OrderDate.ToUniversalTime();
+                    
                     _context.Update(orders);
                     await _context.SaveChangesAsync();
 

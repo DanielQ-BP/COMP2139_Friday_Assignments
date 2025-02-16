@@ -9,18 +9,18 @@ public class Product
     public int Id { get; set; }
     
     [Required]
-    public required string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = null!;
     
     public string Description { get; set; } = string.Empty;
     
     public int CategoryId { get; set; }
-    public Category Category { get; set; }
+    public Category Category { get; set; } = null!;
     
     [Required]
-    public required decimal Price { get; set; }
+    public decimal Price { get; set; }
     
     [Required]
-    public required int Quantity { get; set; }
+    public int Quantity { get; set; }
     
     public int Lowthreshhold { get; set; }
 }
