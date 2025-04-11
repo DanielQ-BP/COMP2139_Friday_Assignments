@@ -21,46 +21,38 @@ builder.Services.AddDbContext<InventoryDBContext>(options =>
 // Register Identity services for ApplicationUser
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
-        options.SignIn.RequireConfirmedAccount = false; // Set true if using email confirmation
-        
-        
+        options.SignIn.RequireConfirmedAccount = true; // Set true if using email confirmation
     })
     .AddEntityFrameworkStores<InventoryDBContext>()
     .AddDefaultTokenProviders();
 
-// Configure Serilog
+// Configure Serilog for logging
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
+builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog());
 
 // Inject out MailTrap email sender
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
-}
-
 using var scope = app.Services.CreateScope();
-var loggerfactory = scope.ServiceProvider.GetRequiredService<ILoggerFactory>();
+var loggerFactory = scope.ServiceProvider.GetRequiredService<ILoggerFactory>();
 try
 {
     var context = scope.ServiceProvider.GetRequiredService<InventoryDBContext>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+    // Seed roles and super admin user
     await ContextSeed.SeedRolesAsync(userManager, roleManager);
     await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
 }
 catch (Exception ex)
 {
-    var logger = loggerfactory.CreateLogger("Program");
-    logger.LogError(ex, "An error occurred seeding roles to the DB.");
+    var logger = loggerFactory.CreateLogger("Program");
+    logger.LogError(ex, "An error occurred while seeding roles to the DB.");
 }
 
 app.UseHttpsRedirection();
@@ -69,9 +61,25 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    // Global error handling for production environment
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+    
+}
+else
+{
+    // Detailed exception page in development environment
+    app.UseDeveloperExceptionPage();
+}
+app.UseStatusCodePagesWithRedirects("/Home/CustomNotFound?statusCode={0}");
+
 app.MapRazorPages();
 app.MapStaticAssets();
 
+// Map controllers for areas and default routing
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Project}/{action=Index}/{id?}"

@@ -118,6 +118,8 @@ namespace Comp2139_Assignment1.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                
+                
                 ApplicationUser user = CreateUser();
                 
                 MailAddress address = new MailAddress(Input.Email);
