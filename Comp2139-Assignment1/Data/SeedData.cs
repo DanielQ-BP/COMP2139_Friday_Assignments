@@ -1,4 +1,5 @@
-﻿using Comp2139_Assignment1.Models;
+﻿using Comp2139_Assignment1.Areas.InventoryManagement.Models;
+using Comp2139_Assignment1.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Comp2139_Assignment1.Data

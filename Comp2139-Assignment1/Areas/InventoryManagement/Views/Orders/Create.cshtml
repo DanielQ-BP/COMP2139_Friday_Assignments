@@ -1,0 +1,47 @@
+﻿@model Comp2139_Assignment1.Areas.InventoryManagement.Models.Orders
+
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="CustomerName">Customer Name</label>
+        <input type="text" class="form-control" id="CustomerName" name="CustomerName" required />
+    </div>
+    <div class="form-group">
+        <label for="ShippingAddress">Shipping Address</label>
+        <input type="text" class="form-control" id="ShippingAddress" name="ShippingAddress" required />
+    </div>
+
+    <!-- Product Selection -->
+    <h3>Order Items</h3>
+    <div id="orderItems">
+        <div class="form-group order-item">
+            <label for="ProductId">Product</label>
+            <select class="form-control" name="productIds[]" required>
+                @foreach (var product in ViewData["Products"] as SelectList)
+                {
+                    <option value="@product.Value">@product.Text</option>
+                }
+            </select>
+            <label for="Quantity">Quantity</label>
+            <input type="number" class="form-control" name="quantities[]" required />
+        </div>
+    </div>
+
+
+    <button type="button" class="btn btn-secondary" onclick="addOrderItem()">Add Another Product</button>
+    <button type="submit" class="btn btn-primary">Create Order</button>
+</form>
+
+<!-- JavaScript to Add More Order Items -->
+<script>
+    function addOrderItem() {
+        var orderItemsDiv = document.getElementById("orderItems");
+        var newOrderItem = orderItemsDiv.children[0].cloneNode(true);
+        orderItemsDiv.appendChild(newOrderItem);
+    }
+</script>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Comp2139_Assignment1.Areas.InventoryManagement.Models.Category>
+
+@{
+    ViewData["Title"] = "Category List";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var category in Model)
+    {
+        <tr>
+            <td>@category.Name</td>
+            <td>
+                <a href="@Url.Action("Edit", "Categories", new { id = category.Id })" class="btn btn-warning">Edit</a>
+                <a href="@Url.Action("Delete", "Categories", new { id = category.Id })" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Categories")" class="btn btn-success">Add New Category</a>

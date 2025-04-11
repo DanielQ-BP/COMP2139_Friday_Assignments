@@ -1,0 +1,17 @@
+﻿@model Comp2139_Assignment1.Areas.InventoryManagement.Models.Category
+
+@{
+    ViewData["Title"] = "Edit Category";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    
+    <div class="form-group">
+        <label for="Name">Category Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>

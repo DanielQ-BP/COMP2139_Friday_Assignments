@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Comp2139_Assignment1.Areas.InventoryManagement.Models
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,7 +13,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Comp2139_Assignment1.styles.css" asp-append-version="true" />
-  
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -26,14 +31,50 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Inventory</a>
+                        <a class="nav-link text-dark" asp-area="InventoryManagement" asp-controller="Product" asp-action="Index">Inventory</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="InventoryOverview">Inventory Overview</a>
+                        <a class="nav-link text-dark" asp-area="InventoryManagement" asp-controller="Product" asp-action="InventoryOverview">Inventory Overview</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                        <a class="nav-link text-dark" asp-area="InventoryManagement" asp-controller="Orders" asp-action="Index">Orders</a>
                     </li>
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark"
+                               asp-area="Identity"
+                               asp-page="/Account/Manage/Index"
+                               title="Manage your Profile"><i class="fa-solid fa-user"></i> Profile
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <form asp-area="Identity" asp-page="/Account/Logout" method="post">
+                                <button type="submit" class="btn btn-link nav-link text-dark" style=" cursor: pointer;">
+                                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark"
+                               asp-area="Identity"
+                               asp-page="/Account/Login"
+                            ><i class="fa fa-sign-in-alt"></i> Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark"
+                               asp-area="Identity"
+                               asp-page="/Account/Register"
+                            ><i class="fa-solid fa-user-plus"></i> Register
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

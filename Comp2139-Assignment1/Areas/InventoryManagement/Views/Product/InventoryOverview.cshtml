@@ -1,0 +1,42 @@
+﻿@model Comp2139_Assignment1.Areas.InventoryManagement.Models.InventoryOverviewViewModel
+
+@{
+    ViewData["Title"] = "Inventory Overview";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card p-3">
+    <h3>Total Products: @Model.TotalProducts</h3>
+    <h3>Total Categories: @Model.TotalCategories</h3>
+
+    <h3>Low Stock Alerts</h3>
+    @if (Model.LowStockProducts.Any())
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Current Stock</th>
+                <th>Low Stock Threshold</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var product in Model.LowStockProducts)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Category.Name</td>
+                    <td class="text-danger">@product.Quantity</td>
+                    <td>@product.Lowthreshhold</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No low-stock products.</p>
+    }
+</div>
