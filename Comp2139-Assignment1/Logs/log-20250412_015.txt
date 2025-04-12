@@ -1,0 +1,26 @@
+2025-04-12 18:44:08.006 -04:00 [WRN] Role 8b44834d-0598-47e4-bc0f-47b80ad9df52 validation failed: DuplicateRoleName.
+2025-04-12 18:44:08.057 -04:00 [WRN] Role 1ddfaa5e-92d1-4d4c-9e09-5f978fb5af7e validation failed: DuplicateRoleName.
+2025-04-12 18:44:08.060 -04:00 [WRN] Role 8fc77c48-91ff-41fa-b41e-262118f12f83 validation failed: DuplicateRoleName.
+2025-04-12 18:44:08.063 -04:00 [WRN] Role e3007e84-51ee-4d7e-83cc-1b944a0311f3 validation failed: DuplicateRoleName.
+2025-04-12 18:44:08.824 -04:00 [WRN] Failed to determine the https port for redirect.
+2025-04-12 18:44:09.262 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:44:11.193 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:44:13.325 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:44:14.933 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:44:16.526 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:45:13.412 -04:00 [WRN] Role 2d9643a0-70b3-4713-944c-5319c2ad806c validation failed: DuplicateRoleName.
+2025-04-12 18:45:13.460 -04:00 [WRN] Role 4e14fb9e-100b-4092-9d12-380f605824f8 validation failed: DuplicateRoleName.
+2025-04-12 18:45:13.463 -04:00 [WRN] Role 529acfc5-9924-4ced-9ce6-d609ede2e5f5 validation failed: DuplicateRoleName.
+2025-04-12 18:45:13.464 -04:00 [WRN] Role a54163ee-af03-411a-bad0-3e67a71cf09f validation failed: DuplicateRoleName.
+2025-04-12 18:45:14.352 -04:00 [WRN] Failed to determine the https port for redirect.
+2025-04-12 18:45:14.579 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:45:16.903 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:45:33.932 -04:00 [INF] User created a new account with password.
+2025-04-12 18:45:35.282 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:45:41.362 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:46:02.230 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:46:10.565 -04:00 [INF] User logged in.
+2025-04-12 18:46:10.686 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:46:13.293 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:46:15.648 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:46:16.819 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
