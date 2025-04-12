@@ -10,7 +10,7 @@ namespace Comp2139_Assignment1.Areas.InventoryManagement.Controllers;
 
 [Area("InventoryManagement")]
 [Route("[area]/[controller]/[action]")]
-[Authorize]
+[Authorize(Roles = "Admin")]
 public class ProductController : Controller
 {
     private readonly InventoryDBContext _context;
@@ -100,6 +100,12 @@ public class ProductController : Controller
         if (!ModelState.IsValid)
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+
+            // AJAX response
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return BadRequest("Invalid form data");
+
+            // Regular form fallback
             return View(product);
         }
 
@@ -107,17 +113,32 @@ public class ProductController : Controller
         {
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
+
             TempData["SuccessMessage"] = "Product created successfully.";
+
+            // AJAX response
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return Ok(); // Return HTTP 200 for AJAX success
+
+            // Regular form fallback
             return RedirectToAction(nameof(Index));
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error creating product.");
             TempData["ErrorMessage"] = "Failed to create the product.";
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+
+            // AJAX response
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return StatusCode(500, "Error creating product.");
+
+            // Regular form fallback
             return View(product);
         }
     }
+
 
     [HttpGet]
     [Authorize(Roles = "SuperAdmin, Admin")]
@@ -245,4 +266,17 @@ public class ProductController : Controller
             return RedirectToAction(nameof(Index));
         }
     }
+    
+    public async Task<IActionResult> Search(string query)
+    {
+        var products = string.IsNullOrWhiteSpace(query)
+            ? await _context.Products.Include(p => p.Category).ToListAsync()
+            : await _context.Products
+                .Include(p => p.Category)
+                .Where(p => p.Name.Contains(query) || p.Category.Name.Contains(query))
+                .ToListAsync();
+
+        return PartialView("_ProductListPartial", products);
+    }
+
 }

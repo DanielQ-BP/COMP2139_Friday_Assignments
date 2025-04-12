@@ -6,7 +6,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-action="Create" method="post">
+<form id="createProductForm" asp-action="Create" method="post">
     <div class="form-group">
         <label for="Name">Name</label>
         <input type="text" class="form-control" id="Name" name="Name" value="@Model?.Name" required />
@@ -41,3 +41,37 @@
 
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
+
+<div id="loader" style="display: none;">
+    <span>Submitting...</span>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('#createProductForm').submit(function (e) {
+            e.preventDefault(); // Stop normal form submission
+
+            var formData = $(this).serialize();
+            $('#loader').show();
+
+            $.ajax({
+                url: '/Product/Create',
+                type: 'POST',
+                data: formData,
+                success: function () {
+                    alert("Product created successfully!");
+                    window.location.href = '/Product/Index';
+                },
+                error: function () {
+                    alert("Error occurred while submitting the form.");
+                },
+                complete: function () {
+                    $('#loader').hide();
+                }
+            });
+        });
+    });
+</script>
+}

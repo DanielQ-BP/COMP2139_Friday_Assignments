@@ -8,7 +8,7 @@ namespace Comp2139_Assignment1.Areas.InventoryManagement.Controllers;
 
 [Area("InventoryManagement")]
 [Route("[area]/[controller]/[action]")]
-[Authorize]
+[Authorize(Roles = "SuperAdmin, Admin")]
 public class CategoriesController : Controller
 {
     private readonly InventoryDBContext _context;
@@ -41,7 +41,7 @@ public class CategoriesController : Controller
     {
         try
         {
-            return View();
+            return View(new Category{Name = string.Empty}); 
         }
         catch (Exception ex)
         {

@@ -7,6 +7,14 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<!-- Live AJAX Search -->
+<div class="form-group">
+    <label for="searchBox">Live Search (AJAX)</label>
+    <input type="text" id="searchBox" class="form-control" placeholder="Search products live..." />
+</div>
+<div id="loader" style="display:none;">Loading...</div>
+
+
 <!-- Search and Filters Form -->
 <form method="get" class="mb-3">
     <div class="form-row">
@@ -76,33 +84,30 @@
 </form>
 
 <!-- Product List Table -->
-<table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Category</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var product in Model)
-    {
-        <tr>
-            <td>@product.Name</td>
-            <td>@product.Description</td>
-            <td>@product.Category.Name</td>
-            <td>@product.Quantity</td>
-            <td>@product.Price.ToString("C")</td>
-            <td>
-                <a href="@Url.Action("Edit", "Product", new { id = product.Id })" class="btn btn-warning">Edit</a>
-                <a href="@Url.Action("Delete", "Product", new { id = product.Id })" class="btn btn-danger">Delete</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<!-- Product List Table (Dynamic AJAX Target) -->
+<div id="productResults">
+    @await Html.PartialAsync("_ProductListPartial", Model)
+</div>
+
 
 <a href="@Url.Action("Create", "Product")" class="btn btn-success">Add New Product</a>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('#searchBox').on('input', function () {
+            var query = $(this).val();
+            $('#loader').show();
+
+            $.get('/InventoryManagement/Product/Search', { query: query }, function (data) {
+                $('#productResults').html(data);
+                $('#loader').hide();
+            }).fail(function () {
+                $('#loader').hide();
+                alert("Error fetching results.");
+            });
+        });
+    });
+</script>
+}

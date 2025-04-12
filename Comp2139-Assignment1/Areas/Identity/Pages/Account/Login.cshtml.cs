@@ -19,6 +19,7 @@ using Microsoft.Extensions.Logging;
 
 namespace COMP2139_ICE.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class LoginModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
