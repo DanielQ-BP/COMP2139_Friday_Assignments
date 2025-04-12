@@ -24,6 +24,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Comp2139_Assignment1.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -156,7 +157,7 @@ namespace Comp2139_Assignment1.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new { area = "Identity", email = Input.Email, returnUrl = returnUrl });
                     }
                     else
                     {

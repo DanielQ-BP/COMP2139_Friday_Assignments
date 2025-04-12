@@ -26,10 +26,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\InventoryManagement\Views\Shared\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Product\Create.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Product\Delete.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Product\Edit.cshtml" />
@@ -47,10 +43,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Areas\InventoryManagement\Views\Category\Create.cshtml" />
-      <AdditionalFiles Include="Areas\InventoryManagement\Views\Category\Delete.cshtml" />
-      <AdditionalFiles Include="Areas\InventoryManagement\Views\Category\Edit.cshtml" />
-      <AdditionalFiles Include="Areas\InventoryManagement\Views\Category\Index.cshtml" />
+      <AdditionalFiles Include="Areas\InventoryManagement\Views\Categories\Create.cshtml" />
+      <AdditionalFiles Include="Areas\InventoryManagement\Views\Categories\Delete.cshtml" />
+      <AdditionalFiles Include="Areas\InventoryManagement\Views\Categories\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\InventoryManagement\Views\Categories\Index.cshtml" />
       <AdditionalFiles Include="Areas\InventoryManagement\Views\Orders\Create.cshtml" />
       <AdditionalFiles Include="Areas\InventoryManagement\Views\Orders\Delete.cshtml" />
       <AdditionalFiles Include="Areas\InventoryManagement\Views\Orders\Edit.cshtml" />

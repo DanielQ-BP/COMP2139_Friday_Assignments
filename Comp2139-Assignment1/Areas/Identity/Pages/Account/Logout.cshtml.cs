@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Comp2139_Assignment1.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
