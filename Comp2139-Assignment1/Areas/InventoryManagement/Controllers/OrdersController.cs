@@ -1,37 +1,51 @@
 ﻿using Comp2139_Assignment1.Areas.InventoryManagement.Models;
 using Comp2139_Assignment1.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace Comp2139_Assignment1.Areas.InventoryManagement.Controllers
+namespace Comp2139_Assignment1.Areas.InventoryManagement.Controllers;
+
+[Area("InventoryManagement")]
+[Route("[area]/[controller]/[action]")]
+[Authorize]
+public class OrdersController : Controller
 {
-    [Area("InventoryManagement")]
-    [Route("[area]/[controller]/[action]")]
-    public class OrdersController : Controller
+    private readonly InventoryDBContext _context;
+    private readonly ILogger<OrdersController> _logger;
+
+    public OrdersController(InventoryDBContext context, ILogger<OrdersController> logger)
     {
-        private readonly InventoryDBContext _context;
+        _context = context;
+        _logger = logger;
+    }
 
-        public OrdersController(InventoryDBContext context)
+    public IActionResult Index()
+    {
+        try
         {
-            _context = context;
-        }
-
-        // Index: List orders
-        public  IActionResult Index()
-        {
-            var orders =  _context.Orders.ToList();
+            var orders = _context.Orders.ToList();
             return View(orders);
         }
-
-        // Create: Show form to create a new order
-        public async Task<IActionResult> Create()
+        catch (Exception ex)
         {
-            // Fetch categories and products for dropdowns
+            _logger.LogError(ex, "Error loading orders.");
+            TempData["ErrorMessage"] = "An error occurred while loading orders.";
+            return View(new List<Orders>());
+        }
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "SuperAdmin, Admin")]
+    public async Task<IActionResult> Create()
+    {
+        try
+        {
             var categories = await _context.Categories.ToListAsync();
             var products = await _context.Products.ToListAsync();
 
-            if (!categories.Any() || !products.Any())  // Ensure both lists have data
+            if (!categories.Any() || !products.Any())
             {
                 ModelState.AddModelError("", "No categories or products available.");
                 ViewData["Categories"] = new List<SelectListItem>();
@@ -39,35 +53,148 @@ namespace Comp2139_Assignment1.Areas.InventoryManagement.Controllers
                 return View(new Orders());
             }
 
-            // Convert to SelectList for dropdowns
             ViewData["Categories"] = new SelectList(categories, "Id", "Name");
             ViewData["Products"] = new SelectList(products, "Id", "Name");
 
             return View(new Orders());
         }
-        
-
-        // Create: Process the form submission to create an order
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Orders orders, List<int> productIds, List<int> quantities)
+        catch (Exception ex)
         {
-            if (productIds.Count != quantities.Count)
+            _logger.LogError(ex, "Error preparing create order form.");
+            TempData["ErrorMessage"] = "An error occurred while preparing the order creation form.";
+            return RedirectToAction(nameof(Index));
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "SuperAdmin, Admin")]
+    public async Task<IActionResult> Create(Orders orders, List<int> productIds, List<int> quantities)
+    {
+        if (productIds.Count != quantities.Count)
+        {
+            ModelState.AddModelError("", "Products and quantities must match.");
+            return View(orders);
+        }
+
+        try
+        {
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Products and quantities must match.");
-                return View(orders);
+                orders.OrderDate = DateTime.UtcNow;
+
+                _context.Orders.Add(orders);
+                await _context.SaveChangesAsync();
+
+                for (int i = 0; i < productIds.Count; i++)
+                {
+                    var orderItem = new OrderItem
+                    {
+                        ProductId = productIds[i],
+                        OrderId = orders.Id,
+                        Quantity = quantities[i]
+                    };
+                    _context.OrderItems.Add(orderItem);
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("OrderConfirmation", new { id = orders.Id });
+            }
+            
+            ViewData["Categories"] = new SelectList(await _context.Categories.ToListAsync() , "Id", "Name");
+            ViewData["Products"] = new SelectList(await _context.Products.ToListAsync() , "Id", "Name");
+            return View(orders);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating order.");
+            TempData["ErrorMessage"] = "Failed to create the order.";
+            return RedirectToAction(nameof(Index));
+        }
+    }
+
+    [Authorize(Roles = "SuperAdmin, Admin")]
+    public async Task<IActionResult> OrderConfirmation(int id)
+    {
+        try
+        {
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            decimal totalPrice = order.OrderItems.Sum(oi => oi.Product.Price * oi.Quantity);
+            ViewData["TotalPrice"] = totalPrice;
+
+            return View(order);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error displaying order confirmation.");
+            TempData["ErrorMessage"] = "Failed to display order confirmation.";
+            return RedirectToAction(nameof(Index));
+        }
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "SuperAdmin, Admin")]
+    public async Task<IActionResult> Edit(int id)
+    {
+        try
+        {
+            var order = await _context.Orders.Include(o => o.OrderItems)
+                                             .ThenInclude(oi => oi.Product)
+                                             .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Products"] = new SelectList(await _context.Products.ToListAsync(), "Id", "Name");
+            return View(order);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error loading order for editing.");
+            TempData["ErrorMessage"] = "Failed to load the order for editing.";
+            return RedirectToAction(nameof(Index));
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "SuperAdmin, Admin")]
+    public async Task<IActionResult> Edit(int id, Orders orders, List<int> productIds, List<int> quantities)
+    {
+        if (productIds.Count != quantities.Count)
+        {
+            ModelState.AddModelError("", "Products and quantities must match.");
+            return View(orders);
+        }
+
+        try
+        {
+            if (id != orders.Id)
+            {
+                return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                // Convert OrderDate to UTC before saving
-                orders.OrderDate = DateTime.UtcNow;
+                orders.OrderDate = orders.OrderDate.ToUniversalTime();
 
-                // Save the order
-                _context.Orders.Add(orders);
+                _context.Update(orders);
                 await _context.SaveChangesAsync();
 
-                // Add order items
+                var existingItems = _context.OrderItems.Where(oi => oi.OrderId == orders.Id).ToList();
+                _context.OrderItems.RemoveRange(existingItems);
+
                 for (int i = 0; i < productIds.Count; i++)
                 {
                     var orderItem = new OrderItem
@@ -81,114 +208,43 @@ namespace Comp2139_Assignment1.Areas.InventoryManagement.Controllers
 
                 await _context.SaveChangesAsync();
 
-                // Redirect to the order confirmation page
-                return RedirectToAction("OrderConfirmation", new { id = orders.Id });
-            }
-
-            // If the model state is invalid, reload the form with existing data
-            ViewData["Products"] = new SelectList(_context.Products, "Id", "Name");
-            return View(orders);
-        }
-        
-        public async Task<IActionResult> OrderConfirmation(int id)
-        {
-            var order = await _context.Orders
-                .Include(o => o.OrderItems)
-                .ThenInclude(oi => oi.Product)
-                .FirstOrDefaultAsync(o => o.Id == id);
-
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            // Calculate the total price
-            decimal totalPrice = order.OrderItems.Sum(oi => oi.Product.Price * oi.Quantity);
-            ViewData["TotalPrice"] = totalPrice;
-
-            return View(order);
-        }
-
-        // Edit: Show form to edit an existing order
-        public async Task<IActionResult> Edit(int id)
-        {
-            var order = await _context.Orders.Include(o => o.OrderItems)
-                                              .ThenInclude(oi => oi.Product)
-                                              .FirstOrDefaultAsync(o => o.Id == id);
-
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            ViewData["Products"] = new SelectList(_context.Products, "Id", "Name");
-            return View(order);
-        }
-
-        // Edit: Process the form submission to update an order
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Orders orders, List<int> productIds, List<int> quantities)
-        {
-            if (productIds.Count != quantities.Count)
-            {
-                ModelState.AddModelError("", "Products and quantities must match.");
-                return View(orders);
-            }
-
-            if (id != orders.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Ensure OrderDate is stored as UTC
-                    orders.OrderDate = orders.OrderDate.ToUniversalTime();
-                    
-                    _context.Update(orders);
-                    await _context.SaveChangesAsync();
-
-                    var existingItems = _context.OrderItems.Where(oi => oi.OrderId == orders.Id).ToList();
-                    _context.OrderItems.RemoveRange(existingItems);
-
-                    for (int i = 0; i < productIds.Count; i++)
-                    {
-                        var orderItem = new OrderItem
-                        {
-                            ProductId = productIds[i],
-                            OrderId = orders.Id,
-                            Quantity = quantities[i]
-                        };
-                        _context.OrderItems.Add(orderItem);
-                    }
-
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Orders.Any(o => o.Id == orders.Id))
-                    {
-                        return NotFound();
-                    }
-                    throw;
-                }
+                // Make sure to set the products for the ViewData
+                ViewData["Products"] = new SelectList(_context.Products, "Id", "Name");
 
                 return RedirectToAction(nameof(Index));
             }
 
+            // Ensure ViewData["Products"] is set before returning the view
             ViewData["Products"] = new SelectList(_context.Products, "Id", "Name");
             return View(orders);
         }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!_context.Orders.Any(o => o.Id == orders.Id))
+            {
+                return NotFound();
+            }
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error editing order.");
+            TempData["ErrorMessage"] = "Failed to edit the order.";
+            return RedirectToAction(nameof(Index));
+        }
+    }
 
-        // Delete: Show confirmation page to delete an order
-        public async Task<IActionResult> Delete(int id)
+
+
+    [HttpGet]
+    [Authorize(Roles = "SuperAdmin, Admin")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
         {
             var order = await _context.Orders.Include(o => o.OrderItems)
-                                              .ThenInclude(oi => oi.Product)
-                                              .FirstOrDefaultAsync(o => o.Id == id);
+                                             .ThenInclude(oi => oi.Product)
+                                             .FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
             {
@@ -197,18 +253,34 @@ namespace Comp2139_Assignment1.Areas.InventoryManagement.Controllers
 
             return View(order);
         }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error loading order for deletion.");
+            TempData["ErrorMessage"] = "Failed to load the order for deletion.";
+            return RedirectToAction(nameof(Index));
+        }
+    }
 
-        // Delete: Process the deletion of an order
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "SuperAdmin, Admin")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        try
         {
             var order = await _context.Orders.FindAsync(id);
             if (order != null)
             {
                 _context.Orders.Remove(order);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Order deleted successfully.";
             }
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting order.");
+            TempData["ErrorMessage"] = "Failed to delete the order.";
             return RedirectToAction(nameof(Index));
         }
     }

@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<h1 class="text-danger">Access Denied</h1>
+<p class="lead text-warning">
+    You do not have permission to access this resource.
+</p>
+
+@if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Basic"))
+{
+    <p>This feature is only available to Admins or SuperAdmins. Please contact support if needed.</p>
+}
+else
+{
+    <p>Please log in with an account that has the appropriate privileges.</p>
+}
+
+<a class="btn btn-primary" href="@Url.Action("Index", "Home")">Go Back Home</a>

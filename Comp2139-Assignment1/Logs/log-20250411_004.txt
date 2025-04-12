@@ -1,0 +1,57 @@
+2025-04-11 16:57:28.057 -04:00 [WRN] Role 76b28d6a-52ff-4b48-b181-72c32eb9b6d5 validation failed: DuplicateRoleName.
+2025-04-11 16:57:28.108 -04:00 [WRN] Role 42dc8130-a7f4-4bbc-a2e8-93d0a1c9354b validation failed: DuplicateRoleName.
+2025-04-11 16:57:28.110 -04:00 [WRN] Role e04a143a-e6ca-4720-84a8-c6d0b9772722 validation failed: DuplicateRoleName.
+2025-04-11 16:57:28.111 -04:00 [WRN] Role 5dd5d104-9830-4ba1-877a-5425817a98d9 validation failed: DuplicateRoleName.
+2025-04-11 16:57:28.781 -04:00 [WRN] Failed to determine the https port for redirect.
+2025-04-11 16:57:29.030 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 16:57:31.240 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 16:57:39.988 -04:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Comp2139_Assignment1.Areas.Identity.Pages.Account.LoginModel.OnPostAsync(String returnUrl) in C:\Users\Daniel\RiderProjects\COMP2139_Friday_Assignments\Comp2139-Assignment1\Areas\Identity\Pages\Account\Login.cshtml.cs:line 120
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.ExecutorFactory.GenericTaskHandlerMethod.Convert[T](Object taskAsObject)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.ExecutorFactory.GenericTaskHandlerMethod.Execute(Object receiver, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.InvokeHandlerMethodAsync()
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.InvokeNextPageFilterAsync()
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.Rethrow(PageHandlerExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Diagnostics.StatusCodePagesMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2025-04-11 16:57:46.097 -04:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Comp2139_Assignment1.Areas.Identity.Pages.Account.LoginModel.OnPostAsync(String returnUrl) in C:\Users\Daniel\RiderProjects\COMP2139_Friday_Assignments\Comp2139-Assignment1\Areas\Identity\Pages\Account\Login.cshtml.cs:line 120
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.ExecutorFactory.GenericTaskHandlerMethod.Convert[T](Object taskAsObject)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.ExecutorFactory.GenericTaskHandlerMethod.Execute(Object receiver, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.InvokeHandlerMethodAsync()
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.InvokeNextPageFilterAsync()
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.Rethrow(PageHandlerExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Diagnostics.StatusCodePagesMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2025-04-11 16:58:55.078 -04:00 [WRN] Role bb3bb53c-bcd9-4a26-971e-7ee1b1040b1e validation failed: DuplicateRoleName.
+2025-04-11 16:58:55.137 -04:00 [WRN] Role c9d2819b-f53e-472c-a42e-0444f695d0d3 validation failed: DuplicateRoleName.
+2025-04-11 16:58:55.142 -04:00 [WRN] Role 72a9fe37-cd84-431d-aa5e-ad58484f2a8d validation failed: DuplicateRoleName.
+2025-04-11 16:58:55.146 -04:00 [WRN] Role 4292053e-bc41-4dbd-b606-92b3a6883477 validation failed: DuplicateRoleName.
+2025-04-11 16:58:55.857 -04:00 [WRN] Failed to determine the https port for redirect.
+2025-04-11 16:58:56.112 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 16:58:58.270 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 16:59:07.640 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 16:59:12.878 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 16:59:19.138 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 16:59:38.602 -04:00 [INF] User created a new account with password.
+2025-04-11 16:59:39.368 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound

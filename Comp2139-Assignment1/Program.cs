@@ -26,10 +26,20 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<InventoryDBContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/Home/AccessDenied";
+});
+
 // Configure Serilog for logging
 Log.Logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
+
+builder.Host.UseSerilog();
 builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog());
 
 // Inject out MailTrap email sender
@@ -48,6 +58,8 @@ try
     // Seed roles and super admin user
     await ContextSeed.SeedRolesAsync(userManager, roleManager);
     await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
+    
+    SeedData.Initialize(scope.ServiceProvider);
 }
 catch (Exception ex)
 {
@@ -74,7 +86,8 @@ else
     // Detailed exception page in development environment
     app.UseDeveloperExceptionPage();
 }
-app.UseStatusCodePagesWithRedirects("/Home/CustomNotFound?statusCode={0}");
+app.UseStatusCodePagesWithRedirects("/Home/NotFound?statusCode={0}");
+
 
 app.MapRazorPages();
 app.MapStaticAssets();

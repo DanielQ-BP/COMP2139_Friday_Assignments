@@ -22,9 +22,16 @@
         <div class="form-group order-item">
             <label for="ProductId">Product</label>
             <select class="form-control" name="productIds[]" required>
-                @foreach (var product in ViewData["Products"] as SelectList)
+                @if (ViewData["Products"] is SelectList productsList)
                 {
-                    <option value="@product.Value">@product.Text</option>
+                    foreach (var product in productsList)
+                    {
+                        <option value="@product.Value">@product.Text</option>
+                    }
+                }
+                else
+                {
+                    <option disabled selected>No products available</option>
                 }
             </select>
             <label for="Quantity">Quantity</label>

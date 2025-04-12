@@ -1,5 +1,5 @@
-﻿@page
-@model Comp2139_Assignment1.Areas.Identity.Pages.Account.LoginModel
+﻿    @page
+@model COMP2139_ICE.Areas.Identity.Pages.Account.LoginModel
 
 @{
     ViewData["Title"] = "Log in";
@@ -48,10 +48,8 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Use another service to log in.</h3>
             <hr />
             @{
-                {
                     <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
                         <div>
                             <p>
@@ -62,7 +60,6 @@
                             </p>
                         </div>
                     </form>
-                }
             }
         </section>
     </div>

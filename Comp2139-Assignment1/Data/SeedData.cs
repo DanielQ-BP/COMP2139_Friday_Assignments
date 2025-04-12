@@ -11,27 +11,11 @@ namespace Comp2139_Assignment1.Data
             using (var context = new InventoryDBContext(
                 serviceProvider.GetRequiredService<DbContextOptions<InventoryDBContext>>()))
             {
-                // Check if the database already has data
+                // Skip seeding if already seeded
                 if (context.Categories.Any() || context.Products.Any() || context.Orders.Any())
-                {
-                    return; // Database has been seeded
-                }
-                
-                if (!context.Categories.Any())
-                {
-                    var categories = new List<Category>
-                    {
-                        new Category { Name = "Electronics" },
-                        new Category { Name = "Clothing" },
-                        new Category { Name = "Food" }
-                    };
+                    return;
 
-                    context.Categories.AddRange(categories);
-                    context.SaveChanges();
-                }
-
-
-                // Add Categories
+                // Seed Categories
                 var electronics = new Category { Name = "Electronics" };
                 var clothing = new Category { Name = "Clothing" };
                 var food = new Category { Name = "Food" };
@@ -39,7 +23,7 @@ namespace Comp2139_Assignment1.Data
                 context.Categories.AddRange(electronics, clothing, food);
                 context.SaveChanges();
 
-                // Add Products
+                // Seed Products
                 var products = new List<Product>
                 {
                     new Product
@@ -101,7 +85,10 @@ namespace Comp2139_Assignment1.Data
                 context.Products.AddRange(products);
                 context.SaveChanges();
 
-                // Add Orders
+                // Refresh product IDs
+                var productList = context.Products.ToList();
+
+                // Seed Orders
                 var orders = new List<Orders>
                 {
                     new Orders
@@ -111,8 +98,8 @@ namespace Comp2139_Assignment1.Data
                         OrderDate = DateTime.Now,
                         OrderItems = new List<OrderItem>
                         {
-                            new OrderItem { ProductId = products[0].Id, Quantity = 2 }, // Smartphone
-                            new OrderItem { ProductId = products[2].Id, Quantity = 5 }    // T-Shirt
+                            new OrderItem { ProductId = productList.First(p => p.Name == "Smartphone").Id, Quantity = 2 },
+                            new OrderItem { ProductId = productList.First(p => p.Name == "T-Shirt").Id, Quantity = 5 }
                         }
                     },
                     new Orders
@@ -122,8 +109,8 @@ namespace Comp2139_Assignment1.Data
                         OrderDate = DateTime.Now,
                         OrderItems = new List<OrderItem>
                         {
-                            new OrderItem { ProductId = products[1].Id, Quantity = 1 }, // Laptop
-                            new OrderItem { ProductId = products[3].Id, Quantity = 3 }  // Jeans
+                            new OrderItem { ProductId = productList.First(p => p.Name == "Laptop").Id, Quantity = 1 },
+                            new OrderItem { ProductId = productList.First(p => p.Name == "Jeans").Id, Quantity = 3 }
                         }
                     }
                 };

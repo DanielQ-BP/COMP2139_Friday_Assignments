@@ -1,0 +1,55 @@
+2025-04-11 21:00:07.277 -04:00 [WRN] Role fdffe67d-5d0c-4ce2-8819-1cd397803f35 validation failed: DuplicateRoleName.
+2025-04-11 21:00:07.330 -04:00 [WRN] Role 01800b8e-7c20-44cb-9e88-2a010317d1df validation failed: DuplicateRoleName.
+2025-04-11 21:00:07.333 -04:00 [WRN] Role 1c490cf6-355c-45db-a932-852812906e64 validation failed: DuplicateRoleName.
+2025-04-11 21:00:07.335 -04:00 [WRN] Role 47cbac56-1777-4b19-8c95-1a09ededc0f3 validation failed: DuplicateRoleName.
+2025-04-11 21:00:08.094 -04:00 [WRN] Failed to determine the https port for redirect.
+2025-04-11 21:00:08.594 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:10.523 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:12.958 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:14.375 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:15.667 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:16.974 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:18.129 -04:00 [INF] User logged out.
+2025-04-11 21:00:18.194 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:19.956 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:30.302 -04:00 [INF] User logged in.
+2025-04-11 21:00:30.378 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:34.320 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:36.078 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:02:19.514 -04:00 [WRN] Role d357fd2a-d39d-4a5a-8c65-43edf096b14f validation failed: DuplicateRoleName.
+2025-04-11 21:02:19.578 -04:00 [WRN] Role c1f34024-8902-48b9-b83f-57944828c010 validation failed: DuplicateRoleName.
+2025-04-11 21:02:19.582 -04:00 [WRN] Role fff63fe4-005f-4550-9391-49fe27d1c117 validation failed: DuplicateRoleName.
+2025-04-11 21:02:19.589 -04:00 [WRN] Role e19f1590-8f18-41e3-8fc7-fd31b4b44f75 validation failed: DuplicateRoleName.
+2025-04-11 21:02:20.255 -04:00 [WRN] Failed to determine the https port for redirect.
+2025-04-11 21:02:20.528 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:02:22.477 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:02:23.823 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:02:26.805 -04:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCoreGeneratedDocument.Areas_InventoryManagement_Views_Orders_Edit.<ExecuteAsync>b__12_0() in C:\Users\Daniel\RiderProjects\COMP2139_Friday_Assignments\Comp2139-Assignment1\Areas\InventoryManagement\Views\Orders\Edit.cshtml:line 30
+   at Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext.GetChildContentAsync(Boolean useCachedResult, HtmlEncoder encoder)
+   at Microsoft.AspNetCore.Mvc.TagHelpers.RenderAtEndOfFormTagHelper.ProcessAsync(TagHelperContext context, TagHelperOutput output)
+   at Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperRunner.<RunAsync>g__Awaited|0_0(Task task, TagHelperExecutionContext executionContext, Int32 i, Int32 count)
+   at AspNetCoreGeneratedDocument.Areas_InventoryManagement_Views_Orders_Edit.ExecuteAsync() in C:\Users\Daniel\RiderProjects\COMP2139_Friday_Assignments\Comp2139-Assignment1\Areas\InventoryManagement\Views\Orders\Edit.cshtml:line 4
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeResultAsync>g__Logged|22_0(ResourceInvoker invoker, IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Diagnostics.StatusCodePagesMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)

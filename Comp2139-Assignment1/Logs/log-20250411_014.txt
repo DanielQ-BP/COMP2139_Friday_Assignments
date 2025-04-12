@@ -1,0 +1,41 @@
+2025-04-11 20:38:28.588 -04:00 [WRN] Role a481e3c2-6bc6-4522-b92e-e2ba9dc11074 validation failed: DuplicateRoleName.
+2025-04-11 20:38:28.655 -04:00 [WRN] Role 139e9d53-83c1-4dae-8810-107472460ce8 validation failed: DuplicateRoleName.
+2025-04-11 20:38:28.658 -04:00 [WRN] Role d1a6cd7c-1429-4b71-84ae-c4cb903beebe validation failed: DuplicateRoleName.
+2025-04-11 20:38:28.662 -04:00 [WRN] Role 21285b89-420c-440b-8328-68f075cb8a3f validation failed: DuplicateRoleName.
+2025-04-11 20:38:29.360 -04:00 [WRN] Failed to determine the https port for redirect.
+2025-04-11 20:38:29.649 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:38:31.661 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:38:33.578 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:38:34.806 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:38:36.359 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:38:50.302 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:39:02.479 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:39:04.127 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:39:04.881 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:39:22.155 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:39:24.384 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:39:45.188 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:39:47.020 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:39:56.416 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:39:58.398 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:40:00.877 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:40:02.899 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 20:40:04.074 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:07.277 -04:00 [WRN] Role fdffe67d-5d0c-4ce2-8819-1cd397803f35 validation failed: DuplicateRoleName.
+2025-04-11 21:00:07.330 -04:00 [WRN] Role 01800b8e-7c20-44cb-9e88-2a010317d1df validation failed: DuplicateRoleName.
+2025-04-11 21:00:07.333 -04:00 [WRN] Role 1c490cf6-355c-45db-a932-852812906e64 validation failed: DuplicateRoleName.
+2025-04-11 21:00:07.335 -04:00 [WRN] Role 47cbac56-1777-4b19-8c95-1a09ededc0f3 validation failed: DuplicateRoleName.
+2025-04-11 21:00:08.094 -04:00 [WRN] Failed to determine the https port for redirect.
+2025-04-11 21:00:08.594 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:10.523 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:12.958 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:14.375 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:15.667 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:16.974 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:18.129 -04:00 [INF] User logged out.
+2025-04-11 21:00:18.194 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:19.956 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:30.302 -04:00 [INF] User logged in.
+2025-04-11 21:00:30.378 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:34.320 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-11 21:00:36.078 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound

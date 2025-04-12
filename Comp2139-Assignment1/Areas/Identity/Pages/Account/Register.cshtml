@@ -13,7 +13,7 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.FullName" class="form-control" autocomplete="username" aria-required="true"  />
+                <input asp-for="Input.FullName" class="form-control" aria-required="true"/>
                 <label asp-for="Input.FullName">Full Name</label>
                 <span asp-validation-for="Input.FullName" class="text-danger"></span>
             </div>
@@ -37,10 +37,8 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Use another service to register.</h3>
             <hr />
             @{
-                {
                     <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
                         <div>
                             <p>
@@ -51,7 +49,6 @@
                             </p>
                         </div>
                     </form>
-                }
             }
         </section>
     </div>
