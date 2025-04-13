@@ -37,7 +37,6 @@ public class OrdersController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = "SuperAdmin, Admin")]
     public async Task<IActionResult> Create()
     {
         try
@@ -68,7 +67,6 @@ public class OrdersController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "SuperAdmin, Admin")]
     public async Task<IActionResult> Create(Orders orders, List<int> productIds, List<int> quantities)
     {
         if (productIds.Count != quantities.Count)

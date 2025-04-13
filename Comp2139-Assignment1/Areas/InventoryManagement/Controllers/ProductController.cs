@@ -10,7 +10,6 @@ namespace Comp2139_Assignment1.Areas.InventoryManagement.Controllers;
 
 [Area("InventoryManagement")]
 [Route("[area]/[controller]/[action]")]
-[Authorize(Roles = "Admin")]
 public class ProductController : Controller
 {
     private readonly InventoryDBContext _context;
