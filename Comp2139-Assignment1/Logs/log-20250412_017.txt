@@ -1,0 +1,13 @@
+2025-04-12 18:47:17.193 -04:00 [WRN] Role 18928974-b8ab-49d6-af04-8b0e58780012 validation failed: DuplicateRoleName.
+2025-04-12 18:47:17.247 -04:00 [WRN] Role 6d06972d-fef4-4854-abeb-240c46b98ab8 validation failed: DuplicateRoleName.
+2025-04-12 18:47:17.252 -04:00 [WRN] Role e7f94af3-ccf1-4f7c-9958-b040321e89f8 validation failed: DuplicateRoleName.
+2025-04-12 18:47:17.256 -04:00 [WRN] Role 3948d18d-95a5-4878-8d14-2e351e544bdb validation failed: DuplicateRoleName.
+2025-04-12 18:47:17.762 -04:00 [WRN] Failed to determine the https port for redirect.
+2025-04-12 18:47:18.174 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:47:20.662 -04:00 [INF] User logged out.
+2025-04-12 18:47:20.721 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:47:23.016 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:47:38.511 -04:00 [INF] User created a new account with password.
+2025-04-12 18:47:39.612 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:47:45.350 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
+2025-04-12 18:47:47.583 -04:00 [WRN] 404 Not Found: StatusCode 404, Path: /Home/NotFound
