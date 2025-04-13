@@ -63,7 +63,13 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             var currentUser = await UserManager.GetUserAsync(User);
-                            var roles = await UserManager.GetRolesAsync(currentUser);
+                            var roles = new List<string>();
+
+                            if (currentUser != null)
+                            {
+                                roles = (List<string>)await UserManager.GetRolesAsync(currentUser);
+                            }
+
                             if (roles.Contains("Admin"))
                             {
                                 <li class="nav-item">
@@ -73,8 +79,6 @@
                                     <a class="nav-link" asp-area="InventoryManagement" asp-controller="Categories" asp-action="Index">Manage Categories</a>
                                 </li>
                             }
-                            <li class="nav-item"><a class="nav-link" asp-controller="Orders" asp-action="Index">My Orders</a></li>
-
                         }
                     </ul>
                     <ul class="navbar-nav">
